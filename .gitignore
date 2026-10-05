@@ -1,0 +1,57 @@
+# Entorno virtual (Virtual Environment)
+.venv/
+venv/
+ENV/
+env/
+
+# Archivos de caché y compilación de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Distribución / Paquetes
+bin/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Archivos de configuración personales / Variables de entorno
+.env
+.venv
+*.secret
+
+# Herramientas de pruebas y cobertura (Pytest, Coverage)
+.htmlcov/
+.tox/
+.nosetests/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+.mypy_cache/
+
+# Configuración de editores (Opcional)
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
