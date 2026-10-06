@@ -1,4 +1,4 @@
-# langchain-ilsenluna · Master AI Engineer · LangChain homework and challenge
+# Master AI Engineer · LangChain . Ilsen Luna
 
 Proyecto de clase: las piezas basicas de LangChain, una por archivo, en el orden de la sesion.
 Todo corre en local con Ollama (llama3.1): coste de API 0 EUR.
