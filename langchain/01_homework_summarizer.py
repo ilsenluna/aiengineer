@@ -26,7 +26,7 @@ pipeline = (
 )
 
 if __name__ == "__main__":
-    result = pipeline.invoke({"topic": "What is LangChain"})
+    result = pipeline.invoke({"topic": "What is LangGraph?"})
     print()
     print("STEP 1: Large text generated")
     print()
