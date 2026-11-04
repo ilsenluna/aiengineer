@@ -8,7 +8,6 @@ Ollama installed and model llama3.1 downloaded
 1. Create the environment: `python -m venv .venv` 
 2. Activate `.venv\Scripts\activate`
 3. Install dependencies: `pip install -r requirements.txt`
-4. Verify Ollama: http://localhost:11434/ 
 
 ## LangChain
 

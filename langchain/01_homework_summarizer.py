@@ -1,9 +1,9 @@
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough, RunnableLambda
-from langchain_ollama import ChatOllama
+from langchain_google_genai import ChatGoogleGenerativeAI
 
-model = ChatOllama(model="llama3.1", temperature=0)
+model = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite", temperature=0)
 parser = StrOutputParser()
 
 generate_large_text = (
