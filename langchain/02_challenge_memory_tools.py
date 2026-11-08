@@ -1,3 +1,4 @@
+from distro import name
 from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.messages import ToolMessage
 from langchain_core.output_parsers import StrOutputParser
@@ -5,9 +6,10 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.tools import tool
-from langchain_ollama import ChatOllama
+from langchain_google_genai import ChatGoogleGenerativeAI
 
-model = ChatOllama(model="llama3.1", temperature=0)
+
+model = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite", temperature=0)
 parser = StrOutputParser()
 
 generate_large_text = (
@@ -39,7 +41,7 @@ def explain_topic(topic: str) -> str:
     return f"{result['text']}\n\nSummary:\n{bullets}"
 
 @tool
-def count_words(text: str) -> str:
+def count_words(text: str) -> int:
     """Count the number of words in a text."""
     return len(text.split())
 
@@ -63,7 +65,14 @@ def run_with_tools(inputs: dict, max_steps: int = 5) -> str:
         messages.append(ai)
 
         if not ai.tool_calls:
-            return ai.content
+            if isinstance(ai.content, list):
+                return "\n".join(
+                    item["text"]
+                    for item in ai.content
+                    if item.get("type") == "text"
+            )
+
+            return str(ai.content)
 
         for call in ai.tool_calls:
             try:
@@ -79,7 +88,6 @@ cadena = RunnableLambda(run_with_tools)
 
 # memory
 records: dict[str, InMemoryChatMessageHistory] = {}
-
 
 def get_history(session_id: str) -> InMemoryChatMessageHistory:
     if session_id not in records:
@@ -118,15 +126,9 @@ if __name__ == "__main__":
         "What is my name and what topic did I ask you about?",
         "How many words does this sentence have: 'memory makes chains useful'?",
     ]
+
     for i, pregunta in enumerate(turnos, 1):
         respuesta = chat.invoke({"pregunta": pregunta}, config=config)
         print(f"[Turn {i}] You: {pregunta}")
         print(f"[Turn {i}] Bot: {respuesta}\n")
-
-    # Control test: another session does NOT share memory
-    otra = chat.invoke(
-        {"pregunta": "What is my name?"},
-        config={"configurable": {"session_id": "student-2"}},
-    )
-    print(f"[Other session] Bot: {otra}")
-    print(f"\nMessages stored in 'student-1': {len(records['student-1'].messages)}")
+   
