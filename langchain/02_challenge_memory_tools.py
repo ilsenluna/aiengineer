@@ -131,4 +131,12 @@ if __name__ == "__main__":
         respuesta = chat.invoke({"pregunta": pregunta}, config=config)
         print(f"[Turn {i}] You: {pregunta}")
         print(f"[Turn {i}] Bot: {respuesta}\n")
+
+    # Control test: another session does NOT share memory
+    otra = chat.invoke(
+        {"pregunta": "What is my name?"},
+        config={"configurable": {"session_id": "student-2"}},
+    )
+    print(f"[Other session] Bot: {otra}")
+    print(f"\nMessages stored in 'student-1': {len(records['student-1'].messages)}")
    
